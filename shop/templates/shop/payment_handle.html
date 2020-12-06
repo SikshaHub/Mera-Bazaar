@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>PayTM Payment Page</title>
+        <!--Required Meta Tags-->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+
+    <body>
+        <h2>Redirecting you to the merchant site...</h2>
+        <h2>Please do not refresh this page...</h2>
+        <form action="https://securegw-stage.paytm.in/order/process" method="POST" name="paytm">
+            {% for key,item in payment_dict.items %}
+                <input type="hidden" name="{{key}}" value="{{item}}">
+            {% endfor %}
+        </form>
+    </body>
+
+    <script>
+        document.paytm.submit()
+    </script>
+</html>

@@ -1,0 +1,68 @@
+{% extends "shop/base.html" %}
+
+{% block title %}
+Payment Response Page
+{% endblock %}
+
+{% block script %}
+<style>
+    .jumbotron{
+        padding-top:40px;
+        padding-bottom:20px;
+        margin-left:200px;
+        margin-right:200px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        
+        <div class="jumbotron">
+            <div class="col m-1">
+                <h3>Payment status regarding your Order Id {{response.ORDERID}}</h3>
+            </div>
+            <table class="table table-sm">
+                <tbody>
+                    <tr>
+                        <td>Order Id</td>
+                        <td>{{response.ORDERID}}</td>
+                    </tr>
+                    <tr>
+                        <td>Transaction Id</td>
+                        <td>{{response.TXNID}}</td>
+                    </tr>
+                    <tr>
+                        <td>Amount</td>
+                        <td>{{response.CURRENCY}} {{response.TXNAMOUNT}}</td>
+                    </tr>
+                    <tr>
+                        <td>Payment Mode</td>
+                        <td>{{response.PAYMENTMODE}}</td>
+                    </tr>
+                    <tr>
+                        <td>Transaction Date</td>
+                        <td>{{response.TXNDATE}}</td>
+                    </tr>
+                    <tr>
+                        <td>Status</td>
+                        <td>{{response.STATUS}}</td>
+                    </tr>
+                    <tr>
+                        <td>Response Message</td>
+                        <td>{{response.RESPMSG}}</td>
+                    </tr>
+                    <tr>
+                        <td>Bank Name</td>
+                        <td>{{response.BANKNAME}}</td>
+                    </tr>
+                    <tr>
+                        <td>Bank Txn Id</td>
+                        <td>{{response.BANKTXNID}}</td>
+                    </tr>
+                    <tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

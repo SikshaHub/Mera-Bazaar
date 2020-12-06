@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %} {% endblock %}</title>
+        <!--Required Meta Tags-->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+        <!-- <script defer src="{% static 'fontawesome/js/fontawesome-all.min.js' %}"></script> -->
+        {% block script %}{% endblock %}
+    </head>
+
+    <body>
+        {% include "menus.html" %}
+        <br><br>
+        {% block content %}
+        {% endblock %}
+
+        <footer class="container d-flex justify-content-center fixed-bottom"><br>
+            <p>&copy; vin.nasik@gmail.com</p>
+        </footer>
+
+        <script src="{% static 'bootstrap/js/jquery.min.js' %}"></script>
+        <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+        {% block js %}
+        {% endblock %}
+    </body>
+</html>

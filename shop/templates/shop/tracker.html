@@ -1,0 +1,109 @@
+{% extends "shop/base.html" %}
+
+{% block title %}
+Tracker - Mera Bazaar
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="col my-2">
+        <h4>Enter Order Id and Email Address to track your Order:</h4>
+        <form id="trackerForm" action="#" method="POST">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="order_id">Order Id</label>
+                    <input type="text" class="form-control form-control-sm" id="order_id"  name="order_id" placeholder="Order Id">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="email_id">Email</label>
+                    <input type="email" class="form-control form-control-sm" id="email_id" name="email_id" placeholder="Email Address">
+                </div>
+            </div>
+            <button type="submit" class="btn-sm btn-primary">Track Order</button>
+        </form>
+    </div>
+    <div class="col my-4">
+        <!-- <h4>Order Status:</h4> -->
+        <h4 id="statusLabel"></h4>
+        <div class="my-4">
+            <ul class="list-group" id="status_items">
+            </ul>
+        </div>
+
+        <h4 id="orderLabel"></h4>
+        <div class="my-4">
+            <ul class="list-group" id="order_items">
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+$('#trackerForm').submit(function(event){
+    $('#items').empty();
+    var formData = {
+        'orderId': $('input[name=order_id]').val(),
+        'emailId': $('input[name=email_id]').val(),
+        'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+    };
+
+    $.ajax({
+        type: 'POST',
+        url: '/shop/tracker/',
+        data: formData,
+        encode: true
+    })
+
+    .done(function(data){
+        $('#status_items').empty();
+        $('#statusLabel').empty();
+        $('#order_items').empty();
+        $('#orderLabel').empty();
+        // Order Delivery Details
+        json_data = JSON.parse(data);
+        if (json_data['status']=="Success"){
+            order_status = json_data['updates'];
+            $('#statusLabel').append("Order Delivery Details:");
+            for (i=0; i<order_status.length; i++){
+                let status = order_status[i]['status'];
+                let time = order_status[i]['time'];
+                myStr = `<li class="list-group-item list-group-item-light d-flex justify-content-between align-items-center py-2">
+                        ${status}
+                        <span class="badge badge-success badge-pill">${time}</span></li>`;
+                $('#status_items').append(myStr);
+            }
+
+            // Order Details
+            cart = JSON.parse(json_data['itemsJson']);
+            $('#orderLabel').append("Order Details:");
+            for (item in cart){
+                qty = cart[item][0];
+                item_name = cart[item][1];
+                myStr = `<li class="list-group-item list-group-item-light d-flex justify-content-between align-items-center py-2">
+                        ${item_name}
+                        <span class="badge badge-success badge-pill">${qty}</span></li>`;
+                $('#order_items').append(myStr);
+            }
+        }
+        else if (json_data['status']=="Failed"){
+            myStr = "<p style='color:red;'>No Order Details Found. Please enter valid Order Id/Email Id.</p>"
+            $('#status_items').append(myStr);
+        }
+        else if (json_data['status']=="Error"){
+            myStr = "<p style='color:red;'>An error occur while fetching details.</p>"
+            $('#status_items').append(myStr);
+        }
+        else {
+            myStr = "<p style='color:red;'>Status not available.</p>"
+            $('#status_items').append(myStr);
+        }
+
+    });
+
+    event.preventDefault();
+})
+</script>
+{% endblock %}

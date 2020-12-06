@@ -1,0 +1,19 @@
+{% extends "shop/base.html" %}
+
+{% block title %}
+PayTM Merchant Payment Page
+{% endblock %}
+
+{% block content %}
+    <h2>Redirecting you to the merchant site...</h2>
+    <h2>Please do not refresh this page...</h2>
+    <form action="https://securegw-stage.paytm.in/order/process" method="POST" id="paytm" name="paytm">
+        {% for key,item in payment_dict.items %}
+            <input type="hidden" name="{{key}}" value="{{item}}">
+        {% endfor %}
+    </form>
+{% endblock %}
+
+{% block js %}
+    document.paytm.submit()
+{% endblock %}

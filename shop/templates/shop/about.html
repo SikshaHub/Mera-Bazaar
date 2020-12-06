@@ -1,0 +1,49 @@
+{% extends "shop/base.html" %}
+
+{% block title %}
+About Page
+{% endblock %}
+
+{% block content %}
+<main role="main">
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron p-3">
+        <div class="container">
+            <h1 class="display-5">Mera Bazaar (Inspired from CornaVirus and Lockdown)</h1>
+            <p>Mera Bazaar is an Indian e-commerce company based in Varanasi, Uttar Pradesh, India. It was founded by Vineet 
+                Tripathi in 2020. The company initially focused on grocery sales, before expanding into other product categories 
+                such as consumer electronics, fashion, home essentials & groceries, and lifestyle products.
+                The service competes primarily with Grofer's, and Modicare.As of April 2020, 
+                Mera Bazaar held a 0.5% market share of India's e-commerce industry.Mera Bazaar is significantly dominant in the sale of apparel 
+                (a position that was bolstered by its acquisitions of Myntra and Jabong.com), and was described as being "neck and neck" with 
+                Grofer's in the sale of Grocery Products. Mera Bazaar is inspired from 2020 CoronaVirus outbreak and wants to help people in need
+                of food and essential consumer goods.</p>
+            <p><a class="btn btn-primary" href="#" role="button">Learn more &raquo;</a></p>
+        </div>
+    </div>
+  
+    <div class="container">
+        <!-- Example row of columns -->
+        <div class="row">
+            <div class="col-md-4">
+                <h3 style="color: white; background-color:darkslategray;text-align: center;">Vineet Tripathi, BE-IT</h3>
+                <div class="row">
+                    <div class="col-md-5">
+                        <img src='/static/categories/vineet.png' class="card-img-top" alt="{{item.product_name}}">
+                    </div>
+                    <div class="col-md-7">
+                        <p>Vineet Tripathi is a BE-IT graduate from Army Institute of Technology. He is currently working in Bank of India as an IT Officer. He enjoys watching Television shows and gardening. </p>
+                    </div>
+                </div>
+                <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+            </div>
+            
+        </div>
+  
+      <hr>
+  
+    </div> <!-- /container -->
+  
+</main>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "blog/base.html" %}
+
+{% block title %}
+Blog Home Page
+{% endblock %}
+
+{% block script %}
+    <style>
+        #blog_image{
+            width: 200px;
+            height: 250px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row mt-4">
+            {% for item in blogpost %}
+                <div class="col-md-6">
+                    <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                        <div class="col p-4 d-flex flex-column position-static">
+                            <strong class="d-inline-block mb-2 text-primary">{{item.post_type}}</strong>
+                            <h5 class="mb-0">{{item.title}}</h5>
+                            <div class="mb-1 text-muted">{{item.pub_date}}</div>
+                            <p class="card-text mb-auto">{{item.cheading_0|slice:"0:110"}}...</p>
+                            <a href="/blog/post/{{item.post_id}}" class="stretched-link">Continue reading</a>
+                        </div>
+                        <div class="col-auto d-none d-lg-block">
+                            <!-- <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg> -->
+                            <img id="blog_image" src='/media/{{item.thumbnail}}' class="bd-placeholder-img" alt="{{item.title}}">
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

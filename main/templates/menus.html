@@ -1,0 +1,34 @@
+<!--Navigation Bar-->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark" style="height:40px;">
+    <a class="navbar-brand" href="/">Mera Bazaar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/shop">Shop <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/blog">Blog</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/shop/tracker">Track Order</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/shop/about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/shop/contact">Contact Us</a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0" method="GET" action="/shop/search/">
+        <input class="form-control mr-sm-2" type="search" id="search" name="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+      <button id="popcart" type="button" data-html="true" class="btn btn-outline-success mx-2" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Items added in Cart.">
+        <a class="nav-link m-0 p-0" href="#">Cart(<span id="cart">0</span>)</a>
+      </button>
+    </div>
+</nav>

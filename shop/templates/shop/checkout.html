@@ -1,0 +1,134 @@
+{% extends "shop/base.html" %}
+
+{% block title %}
+Checkout - Mera Bazaar
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="col my-2">
+        <h4>Step 1- Mera Bazaar Express Checkout- Review your Cart Items</h4>
+        <div class="my-4">
+            <ul class="list-group" id="items">
+            </ul>
+            <div class="alert-sm alert-secondary mt-3" role="alert">
+                Total Price: 
+                <b>&#x20b9; <span id="totalPrice"></span></b>
+                . Thanks for Using Mera Bazaar.
+            </div>
+            
+        </div>
+    </div>
+    <div class="col my-4">
+        <h4>Step 2- Enter your Details</h4>
+        <form action="/shop/checkout/" method="POST">
+            {% csrf_token %}
+            <input type="hidden" id="itemsJson" name="itemsJson">
+            <input type="hidden" id="totalAmount" name="totalAmount">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="full_name">Name</label>
+                    <input type="text" class="form-control form-control-sm" id="full_name"  name="full_name" placeholder="Full Name">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="email_id">Email</label>
+                    <input type="email" class="form-control form-control-sm" id="email_id" name="email_id" placeholder="Email Address">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="address1">Address Line 1</label>
+                <input type="text" class="form-control form-control-sm" id="address1" name="address1" placeholder="Flat No. 201, Building D1,">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="address2">Address Line 2</label>
+                    <input type="text" class="form-control form-control-sm" id="address2" name="address2" placeholder="Air India Colony, Sector 13,">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="address3">Address Line 3</label>
+                    <input type="text" class="form-control form-control-sm" id="address3" name="address3" placeholder="Nerul">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="city">City</label>
+                    <input type="text" class="form-control form-control-sm" id="city" name="city" placeholder="Navi Mumbai">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="state">State</label>
+                    <select id="state" name="state" class="form-control form-control-sm">
+                        <option selected>Maharashtra</option>
+                        <option>Uttar Pradesh</option>
+                        <option>Tamil Nadu</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="zip_zode">Zip</label>
+                    <input type="text" class="form-control form-control-sm" id="zip_zode" name="zip_zode">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="pri_mob">Primary Mobile No.</label>
+                    <input type="tel" class="form-control form-control-sm" id="pri_mob" name="pri_mob" placeholder="+917738793950">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="sec_mob">Secondary Mobile No.</label>
+                    <input type="tel" class="form-control form-control-sm" id="sec_mob" name="sec_mob" placeholder="+917738793450">
+                </div>
+            </div>
+
+            <button type="submit" class="btn-sm btn-primary">Place Order</button>
+
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+    if (localStorage.getItem('cart') == null) {
+        var cart = {};
+    }
+    else{
+        cart = JSON.parse(localStorage.getItem('cart')) ;
+    }
+    items_in_cart = 0;
+    total_price = 0;
+
+    if($.isEmptyObject(cart)){
+        myStr = "<p>Cart is Empty.</p>";
+        $('#items').append(myStr);
+    }
+    else{
+        for (item in cart){
+            qty = cart[item][0];
+            item_name = cart[item][1];
+            price = cart[item][2];
+            items_in_cart = items_in_cart + qty;
+            total_price = total_price + price * qty;
+            // Use ES6 features
+            myStr = `<li class="list-group-item list-group-item-light d-flex justify-content-between align-items-center py-2">
+                    ${item_name}
+                    <span class="badge badge-success badge-pill">${qty}</span></li>`;
+            $('#items').append(myStr);
+        }
+    }
+    document.getElementById('cart').innerHTML = items_in_cart;
+    document.getElementById('totalPrice').innerHTML = total_price;
+
+    $('#itemsJson').val(JSON.stringify(cart));
+
+    {% if order_placed %}
+        alert('Payment is accepted. Your Order Id is {{order_id}}. Use this Id to track your Order.');
+        localStorage.clear();
+        document.location = "/shop";
+    {% endif %}
+
+    $('#totalAmount').val($('#totalPrice').html());
+</script>
+{% endblock %}
